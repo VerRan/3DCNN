@@ -33,5 +33,9 @@ class Videoto3D:
 
 
     def get_UCF_classname(self, filename):
-        return filename[filename.find('_') + 1:filename.find('_', 2)]
+        #print(filename)
+        #print(filename.find('_') + 1)
+        #print(filename.find('_', 2)
+        #return filename[filename.find('_') + 1:filename.find('_', 2)]
+        return filename[0:filename.find('_')]
 
