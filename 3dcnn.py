@@ -151,8 +151,8 @@ def main():
     model.compile(loss=categorical_crossentropy,
                   optimizer=Adam(), metrics=['accuracy'])
     model.summary()
-    plot_model(model, show_shapes=True,
-               to_file=os.path.join(args.output, 'model.png'))
+#     plot_model(model, show_shapes=True,
+#                to_file=os.path.join(args.output, 'model.png'))
 
     X_train, X_test, Y_train, Y_test = train_test_split(
         X, Y, test_size=0.2, random_state=43)

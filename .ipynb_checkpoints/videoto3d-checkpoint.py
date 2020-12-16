@@ -10,6 +10,7 @@ class Videoto3D:
         self.depth = depth
 
     def video3d(self, filename, color=False, skip=True):
+        print('filename is',filename)
         cap = cv2.VideoCapture(filename)
         nframe = cap.get(cv2.CAP_PROP_FRAME_COUNT)
         if skip:
@@ -33,5 +34,8 @@ class Videoto3D:
 
 
     def get_UCF_classname(self, filename):
-        return filename[filename.find('_') + 1:filename.find('_', 2)]
-
+        #print(filename)
+        #print(filename.find('_') + 1)
+        #print(filename.find('_', 2)
+        #return filename[filename.find('_') + 1:filename.find('_', 2)]
+        return filename[0:filename.find('_')]

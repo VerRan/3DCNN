@@ -5,7 +5,7 @@ import matplotlib
 matplotlib.use('AGG')
 import matplotlib.pyplot as plt
 import numpy as np
-from keras.datasets import cifar10
+#from keras.datasets import cifar10
 from keras.layers import (Activation, Conv3D, Dense, Dropout, Flatten,
                           MaxPooling3D)
 from keras.layers.advanced_activations import LeakyReLU
@@ -20,8 +20,8 @@ from tqdm import tqdm
 
 
 def plot_history(history, result_dir):
-    plt.plot(history.history['acc'], marker='.')
-    plt.plot(history.history['val_acc'], marker='.')
+    plt.plot(history.history['accuracy'], marker='.')
+    plt.plot(history.history['val_accuracy'], marker='.')
     plt.title('model accuracy')
     plt.xlabel('epoch')
     plt.ylabel('accuracy')
@@ -43,9 +43,9 @@ def plot_history(history, result_dir):
 
 def save_history(history, result_dir):
     loss = history.history['loss']
-    acc = history.history['acc']
+    acc = history.history['accuracy']
     val_loss = history.history['val_loss']
-    val_acc = history.history['val_acc']
+    val_acc = history.history['val_accuracy']
     nb_epoch = len(acc)
 
     with open(os.path.join(result_dir, 'result.txt'), 'w') as fp:
@@ -129,18 +129,18 @@ def main():
     # Define model
     model = Sequential()
     model.add(Conv3D(32, kernel_size=(3, 3, 3), input_shape=(
-        X.shape[1:]), border_mode='same'))
+        X.shape[1:]), padding='same'))
     model.add(Activation('relu'))
-    model.add(Conv3D(32, kernel_size=(3, 3, 3), border_mode='same'))
+    model.add(Conv3D(32, kernel_size=(3, 3, 3), padding='same'))
     model.add(Activation('softmax'))
-    model.add(MaxPooling3D(pool_size=(3, 3, 3), border_mode='same'))
+    model.add(MaxPooling3D(pool_size=(3, 3, 3), padding='same'))
     model.add(Dropout(0.25))
 
-    model.add(Conv3D(64, kernel_size=(3, 3, 3), border_mode='same'))
+    model.add(Conv3D(64, kernel_size=(3, 3, 3), padding='same'))
     model.add(Activation('relu'))
-    model.add(Conv3D(64, kernel_size=(3, 3, 3), border_mode='same'))
+    model.add(Conv3D(64, kernel_size=(3, 3, 3), padding='same'))
     model.add(Activation('softmax'))
-    model.add(MaxPooling3D(pool_size=(3, 3, 3), border_mode='same'))
+    model.add(MaxPooling3D(pool_size=(3, 3, 3), padding='same'))
     model.add(Dropout(0.25))
 
     model.add(Flatten())
@@ -151,8 +151,8 @@ def main():
     model.compile(loss=categorical_crossentropy,
                   optimizer=Adam(), metrics=['accuracy'])
     model.summary()
-    plot_model(model, show_shapes=True,
-               to_file=os.path.join(args.output, 'model.png'))
+#     plot_model(model, show_shapes=True,
+#                to_file=os.path.join(args.output, 'model.png'))
 
     X_train, X_test, Y_train, Y_test = train_test_split(
         X, Y, test_size=0.2, random_state=43)
