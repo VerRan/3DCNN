@@ -57,6 +57,7 @@ def process():
                 nclass, depth, skip)
         output = '/opt/ml/processing/processed_data/'
         videos = '/opt/ml/processing/input_data/'
+        output_fname = output+fname_npz
 
         vid3d = videoto3d.Videoto3D(img_rows, img_cols, frames)
         nb_classes = nclass
@@ -70,8 +71,8 @@ def process():
                 Y = np_utils.to_categorical(y, nb_classes)
 
                 X = X.astype('float32')
-                np.savez(fname_npz, X=X, Y=Y)
-        print('Saved dataset to dataset.npz.')
+                np.savez(output_fname, X=X, Y=Y)
+        print('Saved dataset to ',output_fname)
         print('X_shape:{}\nY_shape:{}'.format(X.shape, Y.shape))
 
 def main():
