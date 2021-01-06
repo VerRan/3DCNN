@@ -2,6 +2,8 @@ import videoto3d
 import os 
 import numpy as np
 from keras.utils import np_utils
+import socket
+
 # import tqdm
 
 # class Pre_process:
@@ -53,8 +55,15 @@ def process():
         img_rows, img_cols, frames = 32, 32, depth
 
         channel = 3 if color else 1
-        fname_npz = 'dataset_{}_{}_{}.npz'.format(
-                nclass, depth, skip)
+        
+        # 获取本机计算机名称
+        hostname = socket.gethostname()
+        # 获取本机ip
+        ip = socket.gethostbyname(hostname)
+        print(ip)
+
+        fname_npz = 'dataset_{}_{}_{}_{}.npz'.format(
+                ip,nclass, depth, skip)
         output = '/opt/ml/processing/processed_data/'
         videos = '/opt/ml/processing/input_data/'
         output_fname = output+fname_npz
